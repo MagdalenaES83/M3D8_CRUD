@@ -99,10 +99,7 @@
         </ul>
       </div>
     </nav>
-    <div class="container contact-form">
-      <div class="contact-image"></div>
-
-      <h3>Home Page</h3>
+    <div class="container">
       <div class="container py-5">
         <h3 style="text-align: center" id="section2">Products</h3>
         <div
@@ -123,77 +120,6 @@
               <a href="#" class="btn btn-primary">Click</a>
             </div>
           </div>
-          <!-- <div class="card m-1 shadow">
-            <img
-              src="https://via.placeholder.com/200/FFFFF/808080 ?Text=Digital.com
-    
-                  C/O https://placeholder.com/"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">text</p>
-              <a href="#" class="btn btn-primary">Click</a>
-            </div>
-          </div>
-
-          <div class="card m-1 shadow">
-            <img
-              src="https://via.placeholder.com/200/FFFFF/808080 ?Text=Digital.com
-    
-                  C/O https://placeholder.com/"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">text</p>
-              <a href="#" class="btn btn-primary">Click</a>
-            </div>
-          </div>
-          <div class="card m-1 shadow">
-            <img
-              src="https://via.placeholder.com/200/FFFFF/808080 ?Text=Digital.com
-    
-                  C/O https://placeholder.com/"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">text</p>
-              <a href="#" class="btn btn-primary">Click</a>
-            </div>
-          </div>
-          <div class="card m-1 shadow">
-            <img
-              src="https://via.placeholder.com/200/FFFFF/808080 ?Text=Digital.com
-    
-                  C/O https://placeholder.com/"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">text</p>
-              <a href="#" class="btn btn-primary">Click</a>
-            </div>
-          </div>
-          <div class="card m-1 shadow">
-            <img
-              src="https://via.placeholder.com/200/FFFFF/808080 ?Text=Digital.com
-    
-                  C/O https://placeholder.com/"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">text</p>
-              <a href="#" class="btn btn-primary">Click</a>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
@@ -240,20 +166,25 @@
       };
 
       displayProduct = (product) => {
-        let newArray = product.forEach(
-          (card.innerText = `<div class="card m-1 shadow">
+        //let newArray = product.forEach(
+        card.innerHTML = `
+
+
+        <div class="card m-1 shadow" style="width: 18rem;">
                <img
                  src="${product[0].imageUrl}"
-                 class="card-img-top"
+                 class="card-img-top " 
+                          
                  alt="img product"
+                 
                />
                <div class="card-body">
                  <h5 class="card-title">${product[0].name}</h5>
+                 <h5 class="card-title">Producer: ${product[0].brand}</h5>
                  <p class="card-text">${product[0].description}</p>
-                 <a href="#" class="btn btn-primary">${product[0].price}</a>
+                 <a href="#" class="btn btn-primary">PRICE: ${product[0].price}</a>
                </div>
-             </div>`)
-        );
+             </div>`;
       };
     </script>
   </body>
