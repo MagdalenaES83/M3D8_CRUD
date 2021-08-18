@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <style>
+      body {
+        background: grey;
+      }
+      .contact-form {
+        background: #fff;
+        margin-top: 5%;
+        margin-bottom: 5%;
+        width: 70%;
+      }
+      
+      .contact-image {
+        text-align: center;
+      }
+      .contact-image img {
+        width: 11%;
+        margin-top: -3%;
+       
+      }
+      .contact-form form {
+        padding: 14%;
+      }
+      .contact-form form .row {
+        margin-bottom: -7%;
+      }
+      .contact-form h3 {
+        margin-bottom: 8%;
+        margin-top: -10%;
+        text-align: center;
+        color: #0062cc;
+      }
+      .contact-form .btnContact {
+        width: 50%;
+        border: none;
+        padding: 2%;
+        background: #21883a;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+      }
+      .btnContactSubmit {
+        width: 50%;
+                padding: 1.5%;
+        color: #fff;
+        background-color: #0062cc;
+        border: none;
+        
+      }
+    </style>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+
+    <title>BackOffice</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <img src="https://static8.depositphotos.com/1378583/1019/v/950/depositphotos_10199692-stock-illustration-two-leaf-logo.jpg" style='width:60px'>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link ml-5"  href="./homepage.html"><b>Home</b> <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">BackOffice</a>
+            </li>
+            <li class="nav-item dropdown">
+              
+            </li>
+            
+          </ul>
+          
+        </div>
+      </nav>
+    <div class="container contact-form">
+      
+      <div class="contact-image"></div>
+      <form>
+       
+        <div class="row">
+          <div class="col-md-8"> <h3>Insert new product</h3>
+            <div class="form-group">
+              <input
+                id="name"
+                type="text"
+                name="txtName"
+                class="form-control"
+                placeholder="name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                id="price"
+                type="text"
+                name="txtEmail"
+                class="form-control"
+                placeholder="price"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                id="brand"
+                type="text"
+                name="txtPhone"
+                class="form-control"
+                placeholder="brand"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                id="picture"
+                type="text"
+                name="txtPhone"
+                class="form-control"
+                placeholder="picture"
+                required
+              />
+            </div>
+
+            <textarea
+              id="description"
+              name="txtMsg"
+              class="form-control"
+              placeholder="Product description"
+              style="width: 100%; height: 100px"
+              required
+            ></textarea>
+          
+
+          <div class="form-group mt-3">
+            <input
+              id="send_btn"
+              type="submit"
+              name="btnSubmit"
+              class="btnContact  btn-success"
+              value="Submit"
+              onclick="postProduct(event)"
+            />
+          </div>
+          
+        </div>
+      </form>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
+    <script >
+
+
+
+// we are saving and adding the value from each input
+function getProducts(){
+    let product = {
+        name: document.getElementById('name').value,
+        description: document.getElementById('description').value,
+        brand: document.getElementById('brand').value,
+        imageUrl: document.getElementById('picture').value,
+        price: document.getElementById('price').value
+    }
+    //translating into json format
+    let productAsAString = JSON.stringify(product)
+    return productAsAString
+}
+
+async function postProduct(e){
+    try{
+
+        e.preventDefault() //we need it to avoid the auto-refreshing
+        let product = getProducts()
+        let serverRes = await fetch("https://striveschool-api.herokuapp.com/api/product/", {
+            method: "POST",
+            body: product,
+            headers: {
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNmQyM2IzNTgxNzAwMTVjMjI3NTEiLCJpYXQiOjE2MjkyODgxMjgsImV4cCI6MTYzMDQ5NzcyOH0.JkTaQ8msWKVYzCir8TKgqHKbEj9cfQcTyZ364a6vjIQ",
+            "Content-Type": "application/json",
+        }
+    })
+    
+    let serverData = await serverRes.json()
+    console.log(serverData)
+    document.querySelector('form').reset()
+    alert(`${serverData.name} helt OK`)
+    } catch(error){
+        alert(error)
+    }
+
+}
+
+
+    </script>
+  </body>
+</html>
