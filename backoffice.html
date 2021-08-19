@@ -94,9 +94,16 @@
       
       <div class="contact-image"></div>
       <form>
-       
+      <div class="container"><div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div></div>
         <div class="row">
-          <div class="col-md-8"> <h3 id='title'>Insert new product</h3>
+          <div class="col-md-8"> <h3 id='title'> <div class="spinner-border text-success" role="status" id='spiner'>
+              <span class="sr-only">Loading...</span>
+            </div>Insert new product</h3>
+
+            
+
             <div class="form-group">
               <input
                 id="name"
@@ -221,13 +228,13 @@ async function postProduct(e){
 
 
 
+let editProd = document.querySelector('.row')
 
 
 //for edit    
 getProductInfo =(id)=> { 
   fetch("https://striveschool-api.herokuapp.com/api/product/" + id, {
             method: "PUT",
-            body: product,
             headers: {
             "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNmQyM2IzNTgxNzAwMTVjMjI3NTEiLCJpYXQiOjE2MjkyODgxMjgsImV4cCI6MTYzMDQ5NzcyOH0.JkTaQ8msWKVYzCir8TKgqHKbEj9cfQcTyZ364a6vjIQ",
             "Content-Type": "application/json",
@@ -235,7 +242,86 @@ getProductInfo =(id)=> {
     })
     .then(response => response.json())
     .then(obj => {
-                    console.log(obj)
+
+
+                    console.log('ellooo', obj)
+editProd.innerHTML = 
+                    `<div class="col-md-8"> <h3 id='title'>edit product</h3>
+            <div class="form-group">
+              <input
+                id="name"
+                type="text"
+                name="txtName"
+                class="form-control"
+                placeholder="${obj.name}"
+                
+              /> 
+            </div>
+            <div class="form-group">
+              <input
+                id="price"
+                type="text"
+                name="txtEmail"
+                class="form-control"
+                placeholder="${obj.price}"
+                
+              />
+            </div>
+            <div class="form-group">
+              <input
+                id="brand"
+                type="text"
+                name="txtPhone"
+                class="form-control"
+                placeholder="${obj.brand}"
+                
+              />
+            </div>
+            <div class="form-group">
+              <input
+                id="picture"
+                type="text"
+                name="txtPhone"
+                class="form-control"
+                placeholder="${obj.imageUrl}"
+                
+              />
+            </div>
+
+            <textarea
+              id="description"
+              name="txtMsg"
+              class="form-control"
+              placeholder="${obj.description}"
+              style="width: 100%; height: 100px"
+              
+            ></textarea>
+            
+            <div id='delete' class="form-group mt-3">
+            <input
+              id="send_btn"
+              type="submit"
+              name="btnSubmit"
+              class="btnContact  btn-success"
+              value="Submit"
+              onclick="postProduct(event)"
+            />
+          </div>
+          
+          <input
+              id="send_btn"
+              type="submit"
+              name="btnSubmit"
+              class="btn   btn-warning"
+              value="Delete"
+              onclick="deleteItem(event)"
+            />
+          </div>`
+          
+          
+
+
+
                 })
 }
 
@@ -268,8 +354,9 @@ const deleteRow = document.getElementById('delete').innerHTML += `<div class="fo
 
 }
 
-//getProductInfo(id)
+getProductInfo(id)
 
+let spinning = document.getElementById('spiner')
 
 }
 
