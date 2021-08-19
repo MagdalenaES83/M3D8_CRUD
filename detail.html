@@ -64,7 +64,7 @@
       crossorigin="anonymous"
     />
 
-    <title>BackOffice</title>
+    <title>Details</title>
   </head>
   <body>
 
@@ -80,7 +80,7 @@
               <a class="nav-link ml-5"  href="./homepage.html"><b>Home</b> <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">BackOffice</a>
+              <a class="nav-link" href="#">Details</a>
             </li>
             <li class="nav-item dropdown">
               
@@ -96,7 +96,7 @@
       <form>
        
         <div class="row">
-          <div class="col-md-8"> <h3 id='title'>Insert new product</h3>
+          <div class="col-md-8"> <h3>Insert new product</h3>
             <div class="form-group">
               <input
                 id="name"
@@ -148,15 +148,23 @@
             ></textarea>
           
 
-          <div id='delete' class="form-group mt-3">
+          <div class="form-group mt-3">
             <input
               id="send_btn"
               type="submit"
               name="btnSubmit"
               class="btnContact  btn-success"
-              value="Submit"
-              onclick="postProduct(event)"
+              value="Edit"
+              onclick="editProduct()"
             />
+            <button
+            id="send_btn"
+            type="submit"
+            name="btnSubmit"
+            class="btn  btn-danger ml-5"
+            value="Delete"
+            onclick="deleteProduct(event)"
+          > Delete </button>
           </div>
           
         </div>
@@ -180,99 +188,41 @@
       integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
       crossorigin="anonymous"
     ></script>
+
+
+
     <script >
 
-
-// we are saving and adding the value from each input
-function getProducts(){
-    let product = {
-        name: document.getElementById('name').value,
-        description: document.getElementById('description').value,
-        brand: document.getElementById('brand').value,
-        imageUrl: document.getElementById('picture').value,
-        price: document.getElementById('price').value
-    }
-    //translating into json format
-    let productAsAString = JSON.stringify(product)
-    return productAsAString
-}
-
-async function postProduct(e){
-    try{
-
-        e.preventDefault() //we need it to avoid the auto-refreshing
-        let product = getProducts()
-        let serverRes = await fetch("https://striveschool-api.herokuapp.com/api/product/", {
-            method: "POST",
-            body: product,
-            headers: {
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNmQyM2IzNTgxNzAwMTVjMjI3NTEiLCJpYXQiOjE2MjkyODgxMjgsImV4cCI6MTYzMDQ5NzcyOH0.JkTaQ8msWKVYzCir8TKgqHKbEj9cfQcTyZ364a6vjIQ",
-            "Content-Type": "application/json",
-        }
-    })
+    const idParameter = new URLSearchParams(location.search)
+    const id = idParameter.get("id")
+    const url = "https://striveschool-api.herokuapp.com/api/product/";
+    const methodPut = 'PUT'
+    const methodDelete ='DELETE'
     
-    let serverData = await serverRes.json()
-    console.log(serverData)
-    document.querySelector('form').reset()
-    alert(`${serverData.name} helt OK`)
-    } catch(error){
-        alert(error)
-    }}
+    const headers = new Headers({
+        "Content-Type": "application/json",
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNmQyM2IzNTgxNzAwMTVjMjI3NTEiLCJpYXQiOjE2MjkyODgxMjgsImV4cCI6MTYzMDQ5NzcyOH0.JkTaQ8msWKVYzCir8TKgqHKbEj9cfQcTyZ364a6vjIQ",
+    });
 
+   
 
+    async function getProductFromHome() {
+      const response = await fetch(url + id, { headers })
+      const product = await response.json()
+      console.log(product)
+    }
 
-
-
-//for edit    
-getProductInfo =(id)=> { 
-  fetch("https://striveschool-api.herokuapp.com/api/product/" + id, {
-            method: "PUT",
-            body: product,
-            headers: {
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNmQyM2IzNTgxNzAwMTVjMjI3NTEiLCJpYXQiOjE2MjkyODgxMjgsImV4cCI6MTYzMDQ5NzcyOH0.JkTaQ8msWKVYzCir8TKgqHKbEj9cfQcTyZ364a6vjIQ",
-            "Content-Type": "application/json",
-        }
-    })
-    .then(response => response.json())
-    .then(obj => {
-                    console.log(obj)
-                })
-}
-
-
-
-
-
-
-
-
-
-
-
-window.onload = () => {
-const params = new URLSearchParams(location.search)
-const id = params.get('id')
-if (id) {document.getElementById('title').innerText = "Edit product";
-
-const deleteRow = document.getElementById('delete').innerHTML += `<div class="form-group mt-3">
-            <input
-              id="send_btn"
-              type="submit"
-              name="btnSubmit"
-              class="btn   btn-warning"
-              value="Delete"
-              onclick="deleteItem(event)"
-            />
-          </div>`
-
+async function editProduct(){
+    const editObj = await fetch(url + id, { methodPut, headers })
+      const editObj = await editObj.json()
+      console.log(editObj)
 
 }
 
-//getProductInfo(id)
 
-
-}
-
+ window.onload = () => {
+    getProductFromHome()
+    }
 
     </script>
   </body>
